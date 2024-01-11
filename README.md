@@ -27,4 +27,4 @@ Ensure that you have NPM and Node.js installed on your system.
 
 3. The website will be hosted at [http://localhost:8080](http://localhost:8080).
 
-Make sure to follow these steps in order to set up and run the Database Elections Assignment successfully.
+Two console windows will be launched, for both frontend and backend servers.
