@@ -4,13 +4,15 @@
 
 ## Run
 
-Open command prompt and cd to /assignment/
-Enter the following commands:
 
-#### Install: ```npm install```
+Open command prompt and cd to /assignment
 
-#### Build: ```npm run build```
+### Enter the following commands:
 
-#### Start ```npm run start```
+### Install: ```npm install```
 
-The website is located at [http://localhost](http://localhost)
+### Build: ```npm run build```
+
+### Start ```npm run start```
+
+The website will be hosted at [http://localhost](http://localhost:8080)
