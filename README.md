@@ -1,18 +1,30 @@
 # Database Elections Assignment
 
-## Requires NPM and NODEJS
+## Prerequisites
 
-## Run
+Ensure that you have NPM and Node.js installed on your system.
 
+## Run Instructions
 
-Open command prompt and cd to /assignment
+1. Open a command prompt and navigate to the `/assignment` directory.
 
-### Enter the following commands:
+2. Execute the following commands:
 
-### Install: ```npm install```
+    - Install Dependencies:
+      ```bash
+      npm install
+      ```
 
-### Build: ```npm run build```
+    - Build the Project:
+      ```bash
+      npm run build
+      ```
 
-### Start ```npm run start```
+    - Start the Server:
+      ```bash
+      npm run start
+      ```
 
-The website will be hosted at [http://localhost](http://localhost:8080)
+3. The website will be hosted at [http://localhost:8080](http://localhost:8080).
+
+Make sure to follow these steps in order to set up and run the Database Elections Assignment successfully.
