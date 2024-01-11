@@ -2,7 +2,10 @@
 
 ## Prerequisites
 
-Ensure that you have NPM and Node.js installed on your system.
+Ensure that you have the following installed on your system.
+- NPM
+- Node.js
+- PostgreSQL @ 16.1.1
 
 ## Run Instructions
 
