@@ -7,10 +7,10 @@
 Open command prompt and cd to /assignment/
 Enter the following commands:
 
-# Install: ```npm install```
+#### Install: ```npm install```
 
-# Build: ```npm run build```
+#### Build: ```npm run build```
 
-# Start ```npm run start```
+#### Start ```npm run start```
 
 The website is located at [http://localhost](http://localhost)
