@@ -1,0 +1,23 @@
+{
+    "name": "databases_assignment",
+    "version": "1.0.0",
+    "description": "",
+    "main": "launch.ts",
+    "scripts": {
+        "start-backend": "start cmd /k node dist/backend/index.js",
+        "start-frontend": "start cmd /k http-server -p 8080 frontend/public",
+        "build-backend": "tsc -p tsconfig.backend.json",
+        "build-frontend": "tsc -p tsconfig.frontend.json",
+        "start": "npm run start-backend & npm run start-frontend",
+        "build": "npm run build-backend && npm run build-frontend"
+    },
+    "author": "Louis",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/express": "^4.17.21",
+        "typescript": "^5.3.3"
+    },
+    "dependencies": {
+        "express": "^4.18.2"
+    }
+}

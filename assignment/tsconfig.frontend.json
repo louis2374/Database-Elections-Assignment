@@ -1,0 +1,15 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "target": "es2016",
+        "module": "esnext",
+        "outDir": "./frontend/public/src_compiled",
+        "forceConsistentCasingInFileNames": true,
+    },
+    "include": [
+        "./frontend/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
