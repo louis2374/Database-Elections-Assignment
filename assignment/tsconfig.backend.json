@@ -1,9 +1,11 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
+        "composite": true,
         "target": "es2016",
-        "module": "commonjs",
-        "outDir": "./dist/backend"
+        "module": "CommonJS",
+        "rootDir": "./backend",
+        "outDir": "./dist/backend",
     },
     "include": [
         "./backend/**/*.ts"

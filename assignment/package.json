@@ -8,6 +8,7 @@
         "start-frontend": "start cmd /k http-server -p 8080 frontend/public",
         "build-backend": "tsc -p tsconfig.backend.json",
         "build-frontend": "tsc -p tsconfig.frontend.json",
+        "construct-database": "node dist/backend/database/setup.js",
         "start": "npm run start-backend & npm run start-frontend",
         "build": "npm run build-backend && npm run build-frontend"
     },
@@ -15,9 +16,11 @@
     "license": "ISC",
     "devDependencies": {
         "@types/express": "^4.17.21",
+        "@types/pg": "^8.10.9",
         "typescript": "^5.3.3"
     },
     "dependencies": {
-        "express": "^4.18.2"
+        "express": "^4.18.2",
+        "pg": "^8.11.3"
     }
 }
