@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { standard_response_error, standard_response_success } from './standard_response';
-
+import { load_endpoints } from './routing';
 const app = express();
 const port = 3000; // or any other port you prefer
 
@@ -18,15 +18,10 @@ app.use((req, res, next) =>
     next();
 });
 
-app.get('/test', (req: Request, res: Response) =>
-{
-    const message = req.query.msg || 'Hello';
 
-    if (message === "success") standard_response_success(res, { name: "bobby", age: 2, info: { ugly: true, fat: true } });
-    else standard_response_error(res, "This is an invalid message.");
+load_endpoints(app);
 
 
-});
 
 app.listen(port, () =>
 {
