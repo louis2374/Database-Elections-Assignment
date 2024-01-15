@@ -45,17 +45,19 @@ export function load_endpoints(_app: Express): Array<string>
     const files = list_endpoints_recursive(path.resolve(ep_path));
 
     //remove all extensions so its just the path
-    endpoints = files.map(file => "/" + file.replace(".ep.js", "").replace("\\", "/"));
+    endpoints = files.map(file => "/" + file.replace(".ep.js", "").replace(/\\/g, "/"));
 
     //now listen to each endpoint
     endpoints.forEach((endpoint, index) =>
     {
+        console.log("Loading endpoint: " + endpoint);
         _app.get(endpoint, (req: Request, res: Response) =>
         {
+
             //load the endpoint file
             const ep = require(path.resolve(ep_path + "/" + files[index]));
             //call it
-            ep(req, res);
+            ep(res, req);
         })
     });
 

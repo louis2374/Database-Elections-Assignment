@@ -80,7 +80,7 @@ CREATE TABLE tbl_systems (
 --system results table
 CREATE TABLE tbl_results (
     result_id SERIAL PRIMARY KEY,
-    system_id INT,
+    system_id INT UNIQUE,
     result_seats INT,
     result_popular_votes_vs_seat_percent FLOAT,
     result_percent_of_seats FLOAT,
@@ -95,6 +95,9 @@ CREATE TABLE tbl_results (
     FOREIGN KEY (result_most_seats_party) REFERENCES tbl_parties(party_id)
 );
 
+--as i want independent paries to be differenciated easily, i will add a unique id, which i will manually increment to each one
+--using a sequence to store the last independent name id
+CREATE SEQUENCE independent_party_sequence START 1;
 
 --insertion function, will ensure all required information exists for candidate, then insert the candidate
 CREATE OR REPLACE FUNCTION insert_candidate(
@@ -138,6 +141,13 @@ BEGIN
     INSERT INTO tbl_countries (country_name) VALUES (v_country_name) ON CONFLICT DO NOTHING;
 
     --insert a party and do nothing if it exists
+    --there is a special case in which the party is independent.
+    --for this i will add a number to the end and add it, so that 1 independent can be diffrenciated from the other
+    IF v_party_name = 'Independent' THEN --if match
+    v_party_name := v_party_name || nextval('independent_party_sequence'); --set name = to name + next sequence
+    END IF;
+
+    --insert into parties, possible with a new name
     INSERT INTO tbl_parties (party_name) VALUES (v_party_name) ON CONFLICT DO NOTHING;
 
     --create a candidate using all this new data

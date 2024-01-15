@@ -4,12 +4,38 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="./css/base.css">
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
         <title>UK Elections</title>
     </head>
 
     <body>
+        <header>
+            <select onchange="event_select_change(event)">
+                <option value="fptp">option 1</option>
+                <option value="fptp">option 2</option>
+                <option value="fptp">option 2</option>
+                <option value="fptp">option 2</option>
+            </select>
+        </header>
 
+
+
+
+        <main class="main">
+            <p id="test-display"></p>
+        </main>
+
+
+
+        <footer>
+
+        </footer>
     </body>
+
+
+
+
 
     <script src="src/config.js" defer></script>
     <script src="src/connection.js" defer></script>

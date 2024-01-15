@@ -1,0 +1,39 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    background-color: #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    background-color: #fff;
+    max-width: 1024px;
+    flex-grow: 1;
+    margin: 0 auto;
+    width: 100%;
+}
+
+header {
+    background-color: #fff;
+}
+
+footer {
+    height: 2rem;
+    background-color: #fff;
+}
+
+header select {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    background-color: #fff;
+    color: #000000;
+    cursor: pointer;
+}
