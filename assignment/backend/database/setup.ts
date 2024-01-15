@@ -85,13 +85,14 @@ async function create_database(client: PoolClient): Promise<boolean>
 //creates the structure of the database from the sql script
 async function construct_database(client: PoolClient): Promise<boolean>
 {
+    //check file exists
     if (!fs.existsSync(info.construction_script))
     {
         console.log("No construction script found. Exiting.");
         return false;
     }
 
-    //get construction script and append USE DATABASE to it
+    //get construction script
     const construct_script = fs.readFileSync(info.construction_script, "utf-8");
 
     //log
@@ -100,27 +101,31 @@ async function construct_database(client: PoolClient): Promise<boolean>
     //try construct
     try
     {
-        client.query(construct_script);
+        console.log("\nConstructing...");
+        await client.query(construct_script);
     }
     catch (error)
     {
-        console.log("Error constructing database: " + error);
+        console.log("\nError constructing database: " + error);
         return false;
     }
 
+    //add some helping logs
+    console.log("\nSuccess! Database has been constructed.");
     return true;
 }
 
 //populates tables with data
 async function populate_database(client: PoolClient): Promise<boolean>
 {
+    //check it exists
     if (!fs.existsSync(info.insertion_script))
     {
         console.log("No insertion script found. Exiting.");
         return false;
     }
 
-    //get construction script and append USE DATABASE to it
+    //get insersion script
     const insert_script = fs.readFileSync(info.insertion_script, "utf-8");
 
     //log
@@ -129,15 +134,19 @@ async function populate_database(client: PoolClient): Promise<boolean>
     //try populate
     try
     {
-        client.query(insert_script);
+        console.log("\nInserting...");
+        await client.query(insert_script);
     }
     catch (error)
     {
-        console.log("Error populating database: " + error);
+        console.log("\nError populating database: " + error);
         return false;
     }
+
+    console.log("\nSuccess! Database has been populated. Exiting...");
 
     return true;
 }
 
+//script is designed to be run directly
 setup();

@@ -1,3 +1,5 @@
+--creates a candidate by passing each line into the insertion function
+
 SELECT insert_candidate('Stephen','Kinnock','Male',TRUE,'Labour','West Glamorgan','Wales','Wales','Aberavon','County',17008);
 SELECT insert_candidate('Charlotte','Lang','Female',FALSE,'Conservative','West Glamorgan','Wales','Wales','Aberavon','County',6518);
 SELECT insert_candidate('Glenda','Davies','Female',FALSE,'Brexit Party','West Glamorgan','Wales','Wales','Aberavon','County',3108);
