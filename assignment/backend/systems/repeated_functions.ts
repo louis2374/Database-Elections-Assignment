@@ -59,8 +59,13 @@ ORDER BY
     //if it got nothing
     if (query_response.rowCount === 0) return [];
 
+    let out = query_response.rows.map(row =>
+    {
+        return { party_id: row.party_id, votes: Number(row.votes) };
+    });
+
     //return all the rows
-    return query_response.rows;
+    return out;
 }
 
 export async function get_total_number_of_seats(_connection: PoolClient): Promise<number>

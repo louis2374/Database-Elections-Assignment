@@ -129,9 +129,9 @@ export async function insert_result_calculation(
     ) VALUES (
         (SELECT system_id FROM tbl_systems WHERE system_name = '${_system}'),
         ${_seats},
-        ${_popular_votes_vs_seat_percent},
-        ${_percent_of_seats},
-        ${_percent_of_pop_votes},
+        ${(_popular_votes_vs_seat_percent * 100).toFixed(2)},
+        ${(_percent_of_seats * 100).toFixed(2)},
+        ${(_percent_of_pop_votes * 100).toFixed(2)},
         ${_winner_matches_most_seats === true ? 'TRUE' : 'FALSE'},
         ${_winning_party_id},
         ${_party_with_most_seats}

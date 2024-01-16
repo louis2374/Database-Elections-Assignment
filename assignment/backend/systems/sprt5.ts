@@ -1,4 +1,4 @@
-import { PoolClient, QueryResult } from "pg";
+import { PoolClient } from "pg";
 import { db_connect } from "../database/connection";
 import { System, insert_result_calculation } from "./system_handler";
 import { get_all_party_votes, get_total_number_of_seats, get_total_votes } from "./repeated_functions";
@@ -11,7 +11,7 @@ async function calculate(): Promise<object>
     let connection: PoolClient = await db_connect();
 
     //first, get total number of votes
-    let total_votes: number = await get_total_votes(connection);
+    const total_votes: number = await get_total_votes(connection);
 
     //list each party and its number of votes
     let party_votes = await get_all_party_votes(connection);
@@ -35,16 +35,17 @@ async function calculate(): Promise<object>
         return party.votes / total_votes >= threshold;
     })
 
+    let recount_votes = 0;
+
     //then i recount the total votes
-    total_votes = 0;
     party_votes.map(party =>
     {
-        total_votes += party.votes;
+        recount_votes += party.votes;
     })
 
 
     let remaining_seats = total_seats;
-    let seat_vote_price = total_votes / total_seats;
+    let seat_vote_price = recount_votes / total_seats;
 
     //to store parties and their allocated seats
     let allocated_seats: Array<{ party: number, seats: number, remainder: number, votes: number }> = new Array();
@@ -82,7 +83,6 @@ async function calculate(): Promise<object>
         allocated_seats[index++ % allocated_seats.length].seats += 1;
         remaining_seats -= 1;
     }
-
 
     //order the array by number of seats
     allocated_seats.sort((a, b) =>

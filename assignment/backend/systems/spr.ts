@@ -1,8 +1,7 @@
-import { PoolClient, QueryResult } from "pg";
+import { PoolClient } from "pg";
 import { db_connect } from "../database/connection";
 import { System, insert_result_calculation } from "./system_handler";
 import { get_all_party_votes, get_total_number_of_seats, get_total_votes } from "./repeated_functions";
-import { all } from "axios";
 
 //export the main calc func
 module.exports = calculate;
