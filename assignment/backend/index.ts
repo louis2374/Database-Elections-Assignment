@@ -1,8 +1,7 @@
-import express, { Request, Response } from 'express';
-import { standard_response_error, standard_response_success } from './standard_response';
+import express from 'express';
 import { load_endpoints } from './routing';
 const app = express();
-const port = 3000; // or any other port you prefer
+const port = 3000;
 
 //will run for every request
 app.use((req, res, next) =>
