@@ -1,7 +1,7 @@
 import { PoolClient, QueryResult } from "pg";
 import { db_connect } from "../database/connection";
 import { System, insert_result_calculation } from "./system_handler";
-import { get_total_votes } from "./repeated_functions";
+import { get_total_votes, get_votes_for_party } from "./repeated_functions";
 
 //export the main calc func
 module.exports = calculate;
@@ -22,7 +22,6 @@ async function calculate(): Promise<object>
         //for each one, check who won
         let winner: { party: number, votes: number } = await find_constituency_winner(connection, constit);
 
-        console.log(winner);
         //add winner to the list
         if (winners.has(winner.party))
         {
@@ -47,7 +46,7 @@ async function calculate(): Promise<object>
     }));
 
     //no i must find the final winner
-    let final_winner: { party: number, votes: number, seats: number } = { party: 0, votes: 0, seats: 0 };
+    let final_winner: { party: number, seats: number } = { party: 0, seats: 0 };
 
     //if it has more seats, it is the winner
     winners.forEach((winner, key) =>
@@ -59,14 +58,23 @@ async function calculate(): Promise<object>
         {
             final_winner.party = key;
             final_winner.seats = winner.wins;
-            final_winner.votes = winner.votes;
         }
     });
+
     //calculate data that i need to store
+    let total_winner_votes: number = await get_votes_for_party(connection, final_winner.party);
+
+    //if it failed to get votes
+    if (total_winner_votes === 0)
+    {
+        console.log("Failed to retrieve party votes.");
+        return {};
+    }
 
     //percent of votes
     let total_number_of_votes = await get_total_votes(connection);
-    let percent_of_votes: number = final_winner.votes / total_number_of_votes;
+
+    let percent_of_votes: number = total_winner_votes / total_number_of_votes;
     //1 set per constituency
 
     let percent_of_seats: number = final_winner.seats / constituencies.length;
@@ -80,7 +88,7 @@ async function calculate(): Promise<object>
         percent_of_seats - percent_of_votes,
         percent_of_seats,
         percent_of_votes,
-        true,//TODO (check that this is conservative?)
+        false,//TODO (check that this is conservative?)
         final_winner.party,
         final_winner.party
     );

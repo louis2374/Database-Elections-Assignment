@@ -1,16 +1,16 @@
 --fill the system with valid systems
 INSERT INTO tbl_systems (system_name) VALUES ('fptp'); -- First past the post by Constituency (this is the same as the current UK method of election)
-INSERT INTO tbl_systems (system_name) VALUES ('ge_spr'); -- General Election seats based on Simple Proportional Representation (All Seats)
-INSERT INTO tbl_systems (system_name) VALUES ('ge_sprt5'); -- General Election seats based on Simple Proportional Representation (All Seats) with threshold of 5%
-INSERT INTO tbl_systems (system_name) VALUES ('ge_pr_county'); -- General Election seats based on Proportional Representation (By County)
-INSERT INTO tbl_systems (system_name) VALUES ('ge_pr_region'); -- General Election seats based on Proportional Representation (By Region)
-INSERT INTO tbl_systems (system_name) VALUES ('ge_pr_country'); -- General Election seats based on Proportional Representation (By Country)
-INSERT INTO tbl_systems (system_name) VALUES ('ge_lr_county'); -- General Election seats allocations based on Largest Remainder (By County)
-INSERT INTO tbl_systems (system_name) VALUES ('ge_lr_region'); -- General Election seats allocations based on Largest Remainder (By Region)
-INSERT INTO tbl_systems (system_name) VALUES ('ge_lr_country'); -- General Election seats allocations based on Largest Remainder (By Country)
-INSERT INTO tbl_systems (system_name) VALUES ('ge_dh_county'); -- General Election seats allocations based on D’Hondt (By County)
-INSERT INTO tbl_systems (system_name) VALUES ('ge_dh_region'); -- General Election seats allocations based on D’Hondt (By Region)
-INSERT INTO tbl_systems (system_name) VALUES ('ge_dh_country'); -- General Election seats allocations based on D’Hondt (By Country)
+INSERT INTO tbl_systems (system_name) VALUES ('spr'); -- General Election seats based on Simple Proportional Representation (All Seats)
+INSERT INTO tbl_systems (system_name) VALUES ('sprt5'); -- General Election seats based on Simple Proportional Representation (All Seats) with threshold of 5%
+INSERT INTO tbl_systems (system_name) VALUES ('pr_county'); -- General Election seats based on Proportional Representation (By County)
+INSERT INTO tbl_systems (system_name) VALUES ('pr_region'); -- General Election seats based on Proportional Representation (By Region)
+INSERT INTO tbl_systems (system_name) VALUES ('pr_country'); -- General Election seats based on Proportional Representation (By Country)
+INSERT INTO tbl_systems (system_name) VALUES ('lr_county'); -- General Election seats allocations based on Largest Remainder (By County)
+INSERT INTO tbl_systems (system_name) VALUES ('lr_region'); -- General Election seats allocations based on Largest Remainder (By Region)
+INSERT INTO tbl_systems (system_name) VALUES ('lr_country'); -- General Election seats allocations based on Largest Remainder (By Country)
+INSERT INTO tbl_systems (system_name) VALUES ('dh_county'); -- General Election seats allocations based on D’Hondt (By County)
+INSERT INTO tbl_systems (system_name) VALUES ('dh_region'); -- General Election seats allocations based on D’Hondt (By Region)
+INSERT INTO tbl_systems (system_name) VALUES ('dh_country'); -- General Election seats allocations based on D’Hondt (By Country)
 INSERT INTO tbl_systems (system_name) VALUES ('custom'); -- My system. undecided
 
 --creates a candidate by passing each line into the insertion function

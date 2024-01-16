@@ -8,17 +8,17 @@ import path from 'path'
 export enum System
 {
     FPTP = 'fptp',
-    GE_SPR = 'ge_spr',
-    GE_SPRT5 = 'ge_sprt5',
-    GE_PR_COUNTY = 'ge_pr_county',
-    GE_PR_REGION = 'ge_pr_region',
-    GE_PR_COUNTRY = 'ge_pr_country',
-    GE_LR_COUNTY = 'ge_lr_county',
-    GE_LR_REGION = 'ge_lr_region',
-    GE_LR_COUNTRY = 'ge_lr_country',
-    GE_DH_COUNTY = 'ge_dh_county',
-    GE_DH_REGION = 'ge_dh_region',
-    GE_DH_COUNTRY = 'ge_dh_country',
+    SPR = 'spr',
+    SPRT5 = 'sprt5',
+    PR_COUNTY = 'pr_county',
+    PR_REGION = 'pr_region',
+    PR_COUNTRY = 'pr_country',
+    LR_COUNTY = 'lr_county',
+    LR_REGION = 'lr_region',
+    LR_COUNTRY = 'lr_country',
+    DH_COUNTY = 'dh_county',
+    DH_REGION = 'dh_region',
+    DH_COUNTRY = 'dh_country',
     CUSTOM = 'custom',
 }
 

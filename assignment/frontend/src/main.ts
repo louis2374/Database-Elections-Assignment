@@ -10,12 +10,15 @@ function update_display_for_results(results: string)
     if (display) display.innerHTML = JSON.stringify(results);
 }
 
-function event_select_change(event: Event)
+async function event_select_change(event: Event)
 {
+    update_display_for_results("");
+
     let system_id = event.target as HTMLSelectElement;
 
     if (system_id)
     {
-        get_request("results", { "system": system_id.value }).then(response => update_display_for_results(response));
+        let response: string = await get_request("results", { "system": system_id.value });
+        update_display_for_results(response);
     }
 }

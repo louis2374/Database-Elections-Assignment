@@ -2,6 +2,7 @@ import { Response, Request } from 'express'
 import { standard_response_error, standard_response_success } from '../standard_response';
 import { db_connect } from '../database/connection';
 import { PoolClient, QueryResult } from 'pg';
+import { System, get_system } from '../systems/system_handler';
 
 module.exports = async function (_res: Response, _req: Request)
 {
@@ -24,8 +25,16 @@ module.exports = async function (_res: Response, _req: Request)
     }
 
 
+    //get the system results from the database
+    let result: object = await get_system(_req.query.system as System);
 
-
+    //if it existed, return it directly
+    if (Object.keys(result).length !== 0)
+    {
+        standard_response_success(_res, { result });
+        return;
+    }
+    else standard_response_error(_res, "err");
 
     connection.release();
 };
