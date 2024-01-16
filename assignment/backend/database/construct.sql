@@ -85,14 +85,14 @@ CREATE TABLE tbl_results (
     result_popular_votes_vs_seat_percent FLOAT,
     result_percent_of_seats FLOAT,
     result_percent_of_pop_votes FLOAT,
-    result_winner_matches_most_seats BOOLEAN,
+    result_party_with_most_seats INT,
     winning_party_id INT,
-    result_most_seats_party INT,
+    result_winner_matches_real_winner BOOLEAN,
 
     --define foreign keys
     FOREIGN KEY (system_id) REFERENCES tbl_systems(system_id),
     FOREIGN KEY (winning_party_id) REFERENCES tbl_parties(party_id),
-    FOREIGN KEY (result_most_seats_party) REFERENCES tbl_parties(party_id)
+    FOREIGN KEY (result_party_with_most_seats) REFERENCES tbl_parties(party_id)
 );
 
 --as i want independent paries to be differenciated easily, i will add a unique id, which i will manually increment to each one
