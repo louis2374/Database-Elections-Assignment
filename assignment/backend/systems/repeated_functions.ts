@@ -5,23 +5,21 @@ import { Pool, PoolClient, QueryResult } from "pg";
 export async function get_total_votes( _connection: PoolClient ): Promise<number>
 {
     //just a very simple query to get sum
-    let query_response: QueryResult = await _connection.query( "SELECT SUM(vote_votes) FROM tbl_votes;" );
+    let query_response: QueryResult = await _connection.query( "SELECT SUM(candidate_votes) FROM tbl_candidates;" );
 
     //return... im not doing a check it exists because for now it shouldnt
     return Number( query_response.rows[ 0 ].sum );
 }
+
 //returns the total number of votes a party got
 export async function get_votes_for_party( _connection: PoolClient, _party: number ): Promise<number>
 {
     let query_response: QueryResult = await _connection.query( `
 SELECT
     --i only need total votes
-    SUM(tbl_votes.vote_votes)
+    SUM(candidate_votes)
 FROM
     tbl_candidates
-JOIN
-    tbl_votes ON tbl_votes.candidate_id = tbl_candidates.candidate_id
-    --at this point i have a table linking candidates to their vote count
 WHERE tbl_candidates.party_id = ${ _party }
 --now i group this by the party id, and it will sum the votes
 GROUP BY
@@ -42,13 +40,9 @@ export async function get_all_party_votes( _connection: PoolClient ): Promise<Ar
 SELECT
     --i only need party and total votes
     tbl_candidates.party_id,
-    SUM(tbl_votes.vote_votes) as votes
+    SUM(candidate_votes) as votes
 FROM
     tbl_candidates
-JOIN
-    tbl_votes ON tbl_votes.candidate_id = tbl_candidates.candidate_id
-    --at this point i have a table linking candidates to their vote count
-	--now i group this by the party id, and it will sum the votes
 GROUP BY
     tbl_candidates.party_id
     --ordered by number of votes, so winner is at the top
@@ -84,13 +78,9 @@ export async function get_party_votes_by_county( _connection: PoolClient, _count
 SELECT
     --i only need party and total votes
     tbl_candidates.party_id,
-    SUM(tbl_votes.vote_votes) as votes
+    SUM(candidate_votes) as votes
 FROM
     tbl_candidates
-JOIN
-    tbl_votes ON tbl_votes.candidate_id = tbl_candidates.candidate_id
-    --at this point i have a table linking candidates to their vote count
-	--now i group this by the party id, and it will sum the votes
 WHERE
     tbl_candidates.county_id = ${ _county }
 GROUP BY

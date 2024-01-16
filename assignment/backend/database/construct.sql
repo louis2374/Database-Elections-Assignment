@@ -47,6 +47,7 @@ CREATE TABLE tbl_candidates (
     candidate_surname VARCHAR(64),
     candidate_gender VARCHAR(16),
     candidate_sitting_mp BOOLEAN,
+    candidate_votes INT,
     party_id INT,
     county_id INT,
     region_id INT,
@@ -59,16 +60,6 @@ CREATE TABLE tbl_candidates (
     FOREIGN KEY (region_id) REFERENCES tbl_regions(region_id),
     FOREIGN KEY (country_id) REFERENCES tbl_countries(country_id),
     FOREIGN KEY (constituency_id) REFERENCES tbl_constituencies(constituency_id)
-);
-
---votes table, stores vote information about each candidate
-CREATE TABLE tbl_votes (
-    vote_id SERIAL PRIMARY KEY,
-    vote_votes INT,
-    candidate_id INT,
-
-    --foreign keys
-    FOREIGN KEY (candidate_id) REFERENCES tbl_candidates(candidate_id)
 );
 
 --systems table
@@ -157,6 +148,7 @@ BEGIN
         candidate_surname,
         candidate_gender,
         candidate_sitting_mp,
+        candidate_votes,
         party_id,
         county_id,
         region_id,
@@ -167,6 +159,7 @@ BEGIN
         v_surname,
         v_gender,
         v_sitting_mp,
+        v_votes,
         (SELECT party_id FROM tbl_parties WHERE party_name = v_party_name),
         (SELECT county_id FROM tbl_counties WHERE county_name = v_county_name),
         (SELECT region_id FROM tbl_regions WHERE region_name = v_region_name),
@@ -175,8 +168,6 @@ BEGIN
         --returns the new id and saves into candidate_id var
     ) RETURNING candidate_id INTO v_candidate_id;
 
-    --add vote data, using saved id
-    INSERT INTO tbl_votes (vote_votes, candidate_id) VALUES (v_votes, v_candidate_id);
 --end of group
 END;
 --end function code definition

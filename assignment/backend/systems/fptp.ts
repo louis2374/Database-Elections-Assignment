@@ -101,12 +101,9 @@ async function find_constituency_winner( _db_connection: PoolClient, _constituen
         SELECT
             --i only need party and total votes
             tbl_candidates.party_id,
-            SUM(tbl_votes.vote_votes) as votes
+            SUM(tbl_candidates.candidate_votes) as votes
         FROM
             tbl_candidates
-        JOIN
-            tbl_votes ON tbl_votes.candidate_id = tbl_candidates.candidate_id
-            --at this point i have a table linking candidates to their vote count
         WHERE
             tbl_candidates.constituency_id = ${ _constituency }
         --now i group this by the party id, and it will sum the votes

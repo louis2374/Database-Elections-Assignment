@@ -31,6 +31,7 @@ export async function get_system( _system: System ): Promise<object>
     //it did not exist, so calculate it now
     if ( Object.keys( results ).length === 0 )
     {
+        console.log( { _system } );
         //calculate the results, will return the object
         results = await calculate_system( _system );
 

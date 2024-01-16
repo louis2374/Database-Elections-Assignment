@@ -121,11 +121,9 @@ async function calculate(): Promise<object>
     let percent_of_votes = allocated_seats[ 0 ].votes / total_votes;
 
 
-    console.log( allocated_seats );
-
     //add to database, and return itself
     return insert_result_calculation(
-        System.SPRT5,
+        System.LR_COUNTY,
         allocated_seats[ 0 ].seats,
         percent_of_seats - percent_of_votes,
         percent_of_seats,
