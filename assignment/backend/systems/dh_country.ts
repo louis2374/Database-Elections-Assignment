@@ -44,7 +44,7 @@ async function calculate(): Promise<object>
         //calculate the quote of each party
         allocated_seats = allocated_seats.map((party) =>
         {
-            party.quot = party.votes / (Math.pow(party.seats, 3));
+            party.quot = party.votes / (party.seats + 1);
             return party;
         })
 
@@ -70,7 +70,7 @@ async function calculate(): Promise<object>
 
     //add to database, and return itself
     return insert_result_calculation(
-        System.CUSTOM,
+        System.DH_COUNTRY,
         allocated_seats[0].seats,
         percent_of_seats - percent_of_votes,
         percent_of_seats,

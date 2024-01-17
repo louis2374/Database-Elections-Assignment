@@ -65,7 +65,8 @@ CREATE TABLE tbl_candidates (
 --systems table
 CREATE TABLE tbl_systems (
     system_id SERIAL PRIMARY KEY,
-    system_name VARCHAR(128)
+    system_name VARCHAR(128),
+    system_desc VARCHAR(255)
 );
 
 --system results table

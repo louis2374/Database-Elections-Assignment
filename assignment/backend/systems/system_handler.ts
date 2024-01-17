@@ -23,22 +23,22 @@ export enum System
 }
 
 //this is the exported function, will handle calculation if it [system] does not exist
-export async function get_system( _system: System ): Promise<object>
+export async function get_system(_system: System): Promise<object>
 {
     //get it from database
-    let results: object = await query_system_results( _system );
+    let results: object = await query_system_results(_system);
 
     //it did not exist, so calculate it now
-    if ( Object.keys( results ).length === 0 )
+    if (Object.keys(results).length === 0)
     {
-        console.log( { _system } );
+        console.log({ _system });
         //calculate the results, will return the object
-        results = await calculate_system( _system );
+        results = await calculate_system(_system);
 
         //if it failed stop here
-        if ( Object.keys( results ).length === 0 )
+        if (Object.keys(results).length === 0)
         {
-            console.log( "Failed to calculate system results." );
+            console.log("Failed to calculate system results.");
             return {};
         }
 
@@ -49,21 +49,21 @@ export async function get_system( _system: System ): Promise<object>
 }
 
 //querys database for the system
-async function query_system_results( _system: System ): Promise<object>
+async function query_system_results(_system: System): Promise<object>
 {
     //first check if it has already been calculated in the database
     let connection: PoolClient = await db_connect();
 
     //query to check if this system exists in the results database
     //will not add duplicate systems
-    let exists_query: QueryResult = await connection.query( `SELECT * FROM tbl_results WHERE system_id = (SELECT system_id from tbl_systems WHERE system_name = '${ _system }');` );
+    let exists_query: QueryResult = await connection.query(`SELECT * FROM tbl_results WHERE system_id = (SELECT system_id from tbl_systems WHERE system_name = '${_system}');`);
 
     //if it does exist, just get it and return it
-    if ( exists_query.rowCount && exists_query.rowCount > 0 )
+    if (exists_query.rowCount && exists_query.rowCount > 0)
     {
         //return the row object and close connection
         connection.release();
-        return exists_query.rows[ 0 ];
+        return exists_query.rows[0];
     }
 
     //empty obj
@@ -72,27 +72,27 @@ async function query_system_results( _system: System ): Promise<object>
 }
 
 //calculates the system, the system calculator will add it to database
-async function calculate_system( _system: System ): Promise<object>
+async function calculate_system(_system: System): Promise<object>
 {
     const folder_path = "./dist/backend/systems/";
     //calc file name for this sytem
     let full_path = folder_path + _system + ".js";
 
     //ensure file exists
-    if ( !fs.existsSync( path.resolve( full_path ) ) )
+    if (!fs.existsSync(path.resolve(full_path)))
     {
-        console.log( "Invalid system path: " + path.resolve( full_path ) );
+        console.log("Invalid system path: " + path.resolve(full_path));
         return {};
     }
 
     //load the file and call it
-    const calculator = require( path.resolve( full_path ) );
+    const calculator = require(path.resolve(full_path));
 
     //calculate the result
     let created: object = await calculator();
 
     //if it did not fail
-    if ( created && Object.keys( created ).length > 0 )
+    if (created && Object.keys(created).length > 0)
     {
         //return obj
         return created;
@@ -116,8 +116,8 @@ export async function insert_result_calculation(
 {
     //get a connection
     let connection: PoolClient = await db_connect();
-    //query the insert, which also returns the new object
-    let created_obj: QueryResult = await connection.query( `
+
+    let query = `
     INSERT INTO tbl_results (
         system_id,
         result_seats,
@@ -125,24 +125,28 @@ export async function insert_result_calculation(
         result_percent_of_seats,
         result_percent_of_pop_votes,
         result_party_with_most_seats,
-        winning_party_id,
+        --only add winner if there is a winner
+        ${_percent_of_seats > 0.5 ? "winning_party_id," : ""}
         result_winner_matches_real_winner
     ) VALUES (
-        (SELECT system_id FROM tbl_systems WHERE system_name = '${ _system }'),
-        ${ _seats },
-        ${ ( _popular_votes_vs_seat_percent * 100 ).toFixed( 2 ) },
-        ${ ( _percent_of_seats * 100 ).toFixed( 2 ) },
-        ${ ( _percent_of_pop_votes * 100 ).toFixed( 2 ) },
-        ${ _party_width_most_seats },
-        ${ _winning_party_id },
+        (SELECT system_id FROM tbl_systems WHERE system_name = '${_system}'),
+        ${_seats},
+        ${(_popular_votes_vs_seat_percent * 100).toFixed(2)},
+        ${(_percent_of_seats * 100).toFixed(2)},
+        ${(_percent_of_pop_votes * 100).toFixed(2)},
+        ${_party_width_most_seats},
+        ${_percent_of_seats > 0.5 ? _party_width_most_seats + " ," : ""}
         --kinda bad to do this but i know that conservative is always id 2
-        ${ _winning_party_id === 2 ? 'TRUE' : 'FALSE' }
+        ${(_winning_party_id === 2 && _percent_of_seats > 0.5) ? 'TRUE' : 'FALSE'}
     ) ON CONFLICT DO NOTHING RETURNING *;
-    `);
+    `;
+
+    //query the insert, which also returns the new object
+    let created_obj: QueryResult = await connection.query(query);
 
     //close connection
     connection.release();
 
     //return created obj
-    return created_obj.rows[ 0 ];
+    return created_obj.rows[0];
 }
