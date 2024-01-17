@@ -23,6 +23,11 @@ Ensure that you have the following installed on your system:
       npm run build
       ```
 
+    - Construct the database:
+      ```bash
+      npm run construct-database
+      ```
+
     - Start the Server:
       ```bash
       npm run start
